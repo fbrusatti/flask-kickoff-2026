@@ -65,21 +65,26 @@ with app.test_request_context():
     print(url_for('login_get', next='/'))
     print(url_for('profile', username='John Doe'))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        return do_the_login()
-    else:
-        return show_the_login_form()
-
 def do_the_login():
     username = request.form.get("username")
     password = request.form.get("password")
 
+    css_url = url_for('static', filename='style.css')
+
     return f"""
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fondo Multicolor</title>
+        <link rel="stylesheet" href="{css_url}">
+    </head>
+    <body>
         <h1>Login</h1>
         <p>Username: {username}</p>
         <p>Password: {password}</p>
+    </body>
+    </html>
     """
 
 def show_the_login_form():

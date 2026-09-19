@@ -1,0 +1,28 @@
+body {
+    /* Define los colores del fondo multicolor */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    
+    /* Amplía el tamaño del fondo para que la animación tenga espacio para moverse */
+    background-size: 400% 400%;
+    
+    /* Aplica la animación llamada "cambioColor" con una duración de 15 segundos */
+    animation: cambioColor 15s ease infinite;
+    
+    /* Asegura que el cuerpo ocupe toda la altura de la pantalla */
+    height: 100vh;
+    margin: 0;
+}
+
+/* Define la secuencia de la animación */
+@keyframes cambioColor {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
