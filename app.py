@@ -49,28 +49,39 @@ def projects():
 def about():
     return 'The about page'
 
-@app.get('/login')
-def login_get():
-    return show_the_login_form()
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if valid_login(request.form['username'],
+                       request.form['password']):
+            return log_the_user_in(request.form['username'])
+        else:
+            error = 'Invalid username/password'
 
-@app.post('/login')
-def login_post():
-    return do_the_login()
+    # the code below is executed if the request method
+    # was GET or the credentials were invalid
+    return render_template('login.html', error=error)
 
 @app.route('/user/<username>')
 def profile(username):
     return f'{escape(username)}\'s profile'
 
-with app.test_request_context():
-    print(url_for('index'))
-    print(url_for('login_get'))
-    print(url_for('login_get', next='/'))
-    print(url_for('profile', username='John Doe'))
+def valid_login(username, password):
+    # A simple dictionary acting as our temporary "database"
+    USER_DATABASE = {
+        "admin": "secret123",
+        "user1": "password125"
+    }
 
-def do_the_login():
-    username = request.form.get("username")
-    password = request.form.get("password")
+    # 1. Check if the username exists in our records
+    if username in USER_DATABASE:
+        # 2. Check if the password matches exactly
+        return USER_DATABASE[username] == password
 
+    return False
+
+def log_the_user_in(username):
     css_url = url_for('static', filename='style.css')
 
     return f"""
@@ -82,35 +93,7 @@ def do_the_login():
         <link rel="stylesheet" href="{css_url}">
     </head>
     <body>
-        <h1>Login</h1>
-        <p>Username: {username}</p>
-        <p>Password: {password}</p>
+        <h1>Hola</h1> {username}
     </body>
     </html>
     """
-
-def show_the_login_form():
-    return """
-        <h1>Login</h1>
-
-        <form method="POST">
-            <label>
-                Username:
-                <input type="text" name="username">
-            </label>
-
-            <br><br>
-
-            <label>
-                Password:
-                <input type="password" name="password">
-            </label>
-
-            <br><br>
-
-            <button type="submit">
-                Login
-            </button>
-        </form>
-    """
-
