@@ -46,3 +46,21 @@ def projects():
 @app.route('/about')
 def about():
     return 'The about page'
+
+@app.get('/login')
+def login_get():
+    return show_the_login_form()
+
+@app.post('/login')
+def login_post():
+    return do_the_login()
+
+@app.route('/user/<username>')
+def profile(username):
+    return f'{escape(username)}\'s profile'
+
+with app.test_request_context():
+    print(url_for('index'))
+    print(url_for('login'))
+    print(url_for('login', next='/'))
+    print(url_for('profile', username='John Doe'))
