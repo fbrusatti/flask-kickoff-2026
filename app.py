@@ -61,6 +61,49 @@ def profile(username):
 
 with app.test_request_context():
     print(url_for('index'))
-    print(url_for('login'))
-    print(url_for('login', next='/'))
+    print(url_for('login_get'))
+    print(url_for('login_get', next='/'))
     print(url_for('profile', username='John Doe'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        return do_the_login()
+    else:
+        return show_the_login_form()
+
+def do_the_login():
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    return f"""
+        <h1>Login</h1>
+        <p>Username: {username}</p>
+        <p>Password: {password}</p>
+    """
+
+def show_the_login_form():
+    return """
+        <h1>Login</h1>
+
+        <form method="POST">
+            <label>
+                Username:
+                <input type="text" name="username">
+            </label>
+
+            <br><br>
+
+            <label>
+                Password:
+                <input type="password" name="password">
+            </label>
+
+            <br><br>
+
+            <button type="submit">
+                Login
+            </button>
+        </form>
+    """
+
