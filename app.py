@@ -1,13 +1,15 @@
 from flask import Flask, request
 from markupsafe import escape
 from flask import url_for
+from flask import render_template
+
 
 app = Flask(__name__)
 
-@app.route("/hello")
-def hello():
-    name = request.args.get("name", "Flask")
-    return f"Hello, {escape(name)}!"
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', person=name)
 
 @app.route("/")
 def hello_world():
