@@ -1,6 +1,8 @@
 import os
 from flask import Flask
 from config import config
+from .extensions import db, migrate
+
 
 def create_app(environment="development"):
     app = Flask(__name__, instance_relative_config=True)
@@ -9,6 +11,11 @@ def create_app(environment="development"):
 
     # cofigure this app within the environment
     app.config.from_object(config[environment])
+
+    # Initialize extensions
+    db.init_app(app)
+    migrate.init_app(app, db)
+
 
     # ROUTES
     from .routes.auth import bp as auth_bp
