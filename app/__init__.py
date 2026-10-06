@@ -1,16 +1,14 @@
 import os
 from flask import Flask
+from config import config
 
-from flask import Flask, request
-from markupsafe import escape
-from flask import url_for
-from flask import render_template
-
-
-def create_app():
+def create_app(environment="development"):
     app = Flask(__name__, instance_relative_config=True)
 
     os.makedirs(app.instance_path, exist_ok=True)
+
+    # cofigure this app within the environment
+    app.config.from_object(config[environment])
 
     # ROUTES
     from .routes.auth import bp as auth_bp
