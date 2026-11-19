@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Flask Kickoff</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .landing-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+        .nav-links a {
+            margin: 0 1rem;
+            color: #23a6d5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            color: #23d5ab;
+        }
+        .cta-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 10px 20px;
+            background-color: #23a6d5;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .cta-button:hover {
+            background-color: #23d5ab;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <h1>Welcome to Flask Kickoff!</h1>
+        <p class="lead">A full-featured Flask application starter kit with authentication, user management, and more.</p>
+
+        <div class="nav-links">
+            <a href="/hello">Hello World</a>
+            <a href="/auth/login">Login</a>
+            <a href="/users">User Management</a>
+        </div>
+
+        <hr>
+
+        <p>This application demonstrates:</p>
+        <ul>
+            <li>User authentication and registration</li>
+            <li>User management and profile handling</li>
+            <li>A simple "Hello World" feature</li>
+        </ul>
+
+        <a class="cta-button" href="/auth/login">Get Started</a>
+    </div>
+</body>
+</html>
